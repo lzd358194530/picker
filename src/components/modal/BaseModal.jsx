@@ -28,23 +28,23 @@ class BaseModal extends React.Component {
   }
 
   render () {
-    let modal = null;
-    if (this.props.visible) {
-      modal = (
-        <div className="modal-overlay" ref="modalOverlay">
-          <div className="modal" ref="modal">
-            {this.props.children}
-          </div>
+    const modal = (
+      <div className="modal-overlay" 
+        ref={(modalOverlay) => { this.modalOverlay = modalOverlay;}}>
+        <div className="modal" ref={(modal) => { this.modal = modal;}}>
+          {this.props.children}
         </div>
-      );
-    }
+      </div>
+    );
     return (
-      <ReactCSSTransitionGroup
-        transitionName="modal-transition"
-        transitionEnterTimeout={240}
-        transitionLeaveTimeout={240}>
-        { modal }
-      </ReactCSSTransitionGroup>
+       <CSSTransition 
+        classNames="modal-transition" 
+        timeout={300} 
+        mountOnEnter = {true}
+        unmountOnExit = {true}
+        in={this.props.visible}>
+         {modal}
+      </CSSTransition>
     );
   }
 }
